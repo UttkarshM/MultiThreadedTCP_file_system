@@ -1,16 +1,8 @@
 #pragma once
-#include "stdc-predef.h"
-#include <arpa/inet.h>
-#include <pthread.h>
-#include <semaphore.h>
-#include <stdio.h>
-#include <sys/socket.h>
-#include <unistd.h>
-#include <iostream>
-
-#define logger(x) std::cout<<x<<"\n";
+#include "core.h"
 
 namespace Client {
+
 extern sem_t x, y;
 extern pthread_t tid;
 extern pthread_t readerthreads[100];

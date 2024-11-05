@@ -1,6 +1,6 @@
 
 #include "Client.h"
-#include <string>
+#include <string.h>
 
 namespace Client {
 
@@ -50,7 +50,7 @@ namespace Client {
   void Client::reuse_tcp_socket(){
   } 
   void Client::connect_tcp_socket(struct sockaddr_in& client,int port){
-    /* memset(&client.,'\0',sizeof(client)); */
+    memset(&client,'\0',sizeof(client));
     client.sin_family = AF_INET;
     client.sin_port = htons(port);
     client.sin_addr.s_addr = inet_addr("127.0.0.1");//converts newtwork address(generally) into readable string from ipv4;
@@ -63,6 +63,16 @@ namespace Client {
     std::cout << "connection has been established successfully\n";
   }
   void Client::transfer_via_socket(char* buffer){
+    
+
+      write(this->sockfd, buffer, strlen(buffer) + 1); 
+
+      char message[255];
+      memset(message, '\0', sizeof(message)); 
+
+      read(this->sockfd, message, sizeof(message)); 
+
+      printf("Received message: %s\n", message);
 
   }
 }  // namespace Client

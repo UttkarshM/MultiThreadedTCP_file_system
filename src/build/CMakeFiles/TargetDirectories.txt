@@ -1,0 +1,4 @@
+/home/uttkarsh/Distributed_file_management_system/project/src/build/CMakeFiles/client.dir
+/home/uttkarsh/Distributed_file_management_system/project/src/build/CMakeFiles/server.dir
+/home/uttkarsh/Distributed_file_management_system/project/src/build/CMakeFiles/edit_cache.dir
+/home/uttkarsh/Distributed_file_management_system/project/src/build/CMakeFiles/rebuild_cache.dir

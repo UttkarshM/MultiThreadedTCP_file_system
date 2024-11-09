@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/client.dir/client.o -o client  ../libs/libclient_libs.a

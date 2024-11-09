@@ -1,5 +1,6 @@
 
 #include "Client.h"
+#include <iostream>
 #include <string.h>
 
 namespace Client {
@@ -64,7 +65,7 @@ namespace Client {
   }
   void Client::transfer_via_socket(char* buffer){
     
-
+    std::cout<<this->sockfd<<std::endl;
       write(this->sockfd, buffer, strlen(buffer) + 1); 
 
       char message[255];
@@ -73,6 +74,8 @@ namespace Client {
       read(this->sockfd, message, sizeof(message)); 
 
       printf("Received message: %s\n", message);
+
+
 
   }
 }  // namespace Client

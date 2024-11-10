@@ -13,4 +13,5 @@
 	/* exit(1) */
 
 #define MAX_CLIENTS 200
+#define BUFF_LEN 1024
 

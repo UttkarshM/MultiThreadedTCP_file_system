@@ -20,7 +20,11 @@ namespace Server{
     std::cout<<"socket created successfully \n";
   }
   void Server::reuse_tcp_socket(){
-
+    int opt=1;
+    if(setsockopt(sockfd,SOL_SOCKET,SO_REUSEADDR | SO_REUSEPORT,&opt,sizeof(opt))){
+        cout<<"SETSOCKOPT"<<endl;//this is for reusing a port if its not free and is dealing with another
+        /*exit(1);*/
+    }
   }
 
   void Server::bind_tcp_socket(struct sockaddr_in& server,int port){
@@ -40,20 +44,23 @@ namespace Server{
       logger("listening");
     }
   }
+void* Server::accept_tcp() {
+    struct sockaddr_in client_addr;
+    socklen_t len = sizeof(client_addr);
+    new_sock_fd = accept(sockfd, (struct sockaddr*)&client_addr, &len); 
 
-  void* Server::accept_tcp(){
-
-    struct sockaddr_in server;
-    socklen_t len=sizeof(server);
-    new_sock_fd=accept(this->sockfd,(struct sockaddr*)&server,&len);
-    this->new_sock_fd = new_sock_fd;
-    if(new_sock_fd<0){
-      logger("Accepting");
+    if (new_sock_fd < 0) {
+        logger("Failed to accept connection");
+    } else {
+        std::cout << "Connection accepted from client\n";
     }
 
-  std::cout<<pthread_self()<<std::endl;
-    return nullptr;
-  }
+    char client_ip[INET_ADDRSTRLEN];
+    inet_ntop(AF_INET, &client_addr.sin_addr, client_ip, sizeof(client_ip));
+    std::cout << "Client connected from IP: " << client_ip << " on port: " << ntohs(client_addr.sin_port) << std::endl;
+
+    return nullptr;  // You can return whatever is needed here
+}
 
   void Server::connect_tcp_socket() const {
     char buffer[255] = "holla";
@@ -69,4 +76,31 @@ namespace Server{
 
   }
   void Server::transfer_via_socket(char* buffer){}
+  
+  void Server::chat_to_client(int id) {
+    char buffer[BUFF_LEN];
+
+    ssize_t bytes_read = read(this->new_sock_fd, buffer, sizeof(buffer));
+    if (bytes_read < 0) {
+        std::cerr << "Failed to read message from client \n";
+        return;
+    }
+
+    std::cout << "Received message from client: " << buffer << "\n";
+
+    std::cout << "Enter the message to be sent\n";
+    std::cin.getline(buffer, sizeof(buffer));
+    ssize_t bytes_written = write(this->new_sock_fd, buffer, strlen(buffer) + 1);
+    if (bytes_written < 0) {
+        std::cerr << "Failed to send message to client \n";
+        return;
+    }
+
+    memset(buffer, '\0', sizeof(buffer));
+
+    
 }
+
+
+  }
+

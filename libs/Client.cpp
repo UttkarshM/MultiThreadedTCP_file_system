@@ -1,7 +1,9 @@
 
 #include "Client.h"
 #include <iostream>
+#include <netinet/in.h>
 #include <string.h>
+#include <unistd.h>
 
 namespace Client {
 
@@ -10,37 +12,6 @@ namespace Client {
   pthread_t readerthreads[100];
   int readercount = 0;
 
-  void* reader(void* param)
-  {
-    sem_wait(&x);
-    readercount++;
-
-    if (readercount == 1) {
-      sem_wait(&y);
-    }
-    sem_post(&x);
-    printf("\n%d reader is inside", readercount);
-
-    sleep(5);
-
-    sem_wait(&x);
-    readercount--;
-
-    if (readercount == 0) {
-      sem_post(&y);
-    }
-    printf("\n%d Writer is leaving", readercount + 1);
-    pthread_exit(nullptr);
-  }
-  void* writer(void* param)
-  {
-    printf("\nWriter is trying to enter");
-    sem_wait(&y);
-    printf("\nWriter has entered");
-    sem_post(&y);
-    printf("\nWriter is leaving");
-    pthread_exit(nullptr);
-  }
   void Client::create_tcp_socket(){
     this->sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if(this->sockfd < 0) {
@@ -54,7 +25,7 @@ namespace Client {
     memset(&client,'\0',sizeof(client));
     client.sin_family = AF_INET;
     client.sin_port = htons(port);
-    client.sin_addr.s_addr = inet_addr("127.0.0.1");//converts newtwork address(generally) into readable string from ipv4;
+    client.sin_addr.s_addr = INADDR_ANY;//converts newtwork address(generally) into readable string from ipv4;
     this->port = port;
 
     if(connect(sockfd, (struct sockaddr*)&client, sizeof(client)) < 0)
@@ -74,8 +45,28 @@ namespace Client {
       read(this->sockfd, message, sizeof(message)); 
 
       printf("Received message: %s\n", message);
-
-
-
   }
-}  // namespace Client
+  void Client::chat_to_server() {
+    char buffer[BUFF_LEN];
+    
+    std::cout << "Enter the message to be sent\n";
+    std::cin.getline(buffer, sizeof(buffer));
+
+    ssize_t bytes_written = write(this->sockfd, buffer, strlen(buffer) + 1);
+    if (bytes_written < 0) {
+        std::cerr << "Failed to send message to server" << std::endl;
+        return;
+    }
+    
+    memset(buffer, '\0', sizeof(buffer));
+    
+    ssize_t bytes_read = read(this->sockfd, buffer, sizeof(buffer));
+    if (bytes_read < 0) {
+        std::cerr << "Failed to read message from server" << std::endl;
+        return;
+    }
+
+    std::cout << "Message received from server: " << buffer << "\n";
+}
+
+}

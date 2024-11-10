@@ -15,7 +15,8 @@ int main() {
 
     char buffer[] = "Hello from Client";
 
-    client->transfer_via_socket(buffer);
+    /*client->transfer_via_socket(buffer);*/
+    client->chat_to_server();
 
     return 0;
 }

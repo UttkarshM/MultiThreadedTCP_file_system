@@ -28,7 +28,8 @@ class Server{
     {
     }
     ~Server(){
-      close(new_sock_fd);
+    close(sockfd);
+      /*close(new_sock_fd);*/
     }
     void create_tcp_socket();
     void reuse_tcp_socket();
@@ -39,6 +40,7 @@ class Server{
     void return_ptr(void* arg);
     void connect_tcp_socket() const ;
     void transfer_via_socket(char* buffer);
+    void chat_to_client(int id);
   private:
     int sockfd,new_sock_fd;
     int port;
@@ -52,9 +54,9 @@ static void server_queue_pop(){
   pthread_join(readerthreads[++rear],NULL);
 }
 static void server_queue_push(void* function(void*)){
-  std::cout<<top<<"\n";
+  /*std::cout<<top<<"\n";*/
   pthread_create(&readerthreads[++top],NULL,function,NULL);
-  std::cout<<pthread_self()<<"\n";
+  /*std::cout<<pthread_self()<<"\n";*/
   server_queue_pop();
 }
 }

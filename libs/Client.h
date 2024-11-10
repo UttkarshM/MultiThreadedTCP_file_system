@@ -19,11 +19,15 @@ class Client{
       port(8080)
     {
     }
+    ~Client(){
+	close(sockfd);
+    }
 
     void create_tcp_socket();
     void reuse_tcp_socket();
     void connect_tcp_socket(struct sockaddr_in& client,int port) ;
     void transfer_via_socket(char* buffer);
+    void chat_to_server();
   private:
     int sockfd;
     int port;

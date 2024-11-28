@@ -1,3 +1,6 @@
 project(TCP_FILE_SYSTEM)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)#fPIC
+
+add_subdirectory(external)
 add_subdirectory(libs)
 add_subdirectory(src)

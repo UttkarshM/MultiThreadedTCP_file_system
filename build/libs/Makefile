@@ -117,61 +117,61 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-libs/CMakeFiles/client_libs.dir/rule:
-	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libs/CMakeFiles/client_libs.dir/rule
-.PHONY : libs/CMakeFiles/client_libs.dir/rule
+libs/CMakeFiles/server_lib.dir/rule:
+	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libs/CMakeFiles/server_lib.dir/rule
+.PHONY : libs/CMakeFiles/server_lib.dir/rule
 
 # Convenience name for target.
-client_libs: libs/CMakeFiles/client_libs.dir/rule
-.PHONY : client_libs
+server_lib: libs/CMakeFiles/server_lib.dir/rule
+.PHONY : server_lib
 
 # fast build rule for target.
-client_libs/fast:
-	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f libs/CMakeFiles/client_libs.dir/build.make libs/CMakeFiles/client_libs.dir/build
-.PHONY : client_libs/fast
+server_lib/fast:
+	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f libs/CMakeFiles/server_lib.dir/build.make libs/CMakeFiles/server_lib.dir/build
+.PHONY : server_lib/fast
 
 # Convenience name for target.
-libs/CMakeFiles/server_libs.dir/rule:
-	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libs/CMakeFiles/server_libs.dir/rule
-.PHONY : libs/CMakeFiles/server_libs.dir/rule
+libs/CMakeFiles/client_lib.dir/rule:
+	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libs/CMakeFiles/client_lib.dir/rule
+.PHONY : libs/CMakeFiles/client_lib.dir/rule
 
 # Convenience name for target.
-server_libs: libs/CMakeFiles/server_libs.dir/rule
-.PHONY : server_libs
+client_lib: libs/CMakeFiles/client_lib.dir/rule
+.PHONY : client_lib
 
 # fast build rule for target.
-server_libs/fast:
-	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f libs/CMakeFiles/server_libs.dir/build.make libs/CMakeFiles/server_libs.dir/build
-.PHONY : server_libs/fast
+client_lib/fast:
+	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f libs/CMakeFiles/client_lib.dir/build.make libs/CMakeFiles/client_lib.dir/build
+.PHONY : client_lib/fast
 
 # target to build an object file
 Client.o:
-	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f libs/CMakeFiles/client_libs.dir/build.make libs/CMakeFiles/client_libs.dir/Client.o
+	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f libs/CMakeFiles/client_lib.dir/build.make libs/CMakeFiles/client_lib.dir/Client.o
 .PHONY : Client.o
 
 # target to preprocess a source file
 Client.i:
-	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f libs/CMakeFiles/client_libs.dir/build.make libs/CMakeFiles/client_libs.dir/Client.i
+	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f libs/CMakeFiles/client_lib.dir/build.make libs/CMakeFiles/client_lib.dir/Client.i
 .PHONY : Client.i
 
 # target to generate assembly for a file
 Client.s:
-	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f libs/CMakeFiles/client_libs.dir/build.make libs/CMakeFiles/client_libs.dir/Client.s
+	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f libs/CMakeFiles/client_lib.dir/build.make libs/CMakeFiles/client_lib.dir/Client.s
 .PHONY : Client.s
 
 # target to build an object file
 Server.o:
-	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f libs/CMakeFiles/server_libs.dir/build.make libs/CMakeFiles/server_libs.dir/Server.o
+	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f libs/CMakeFiles/server_lib.dir/build.make libs/CMakeFiles/server_lib.dir/Server.o
 .PHONY : Server.o
 
 # target to preprocess a source file
 Server.i:
-	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f libs/CMakeFiles/server_libs.dir/build.make libs/CMakeFiles/server_libs.dir/Server.i
+	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f libs/CMakeFiles/server_lib.dir/build.make libs/CMakeFiles/server_lib.dir/Server.i
 .PHONY : Server.i
 
 # target to generate assembly for a file
 Server.s:
-	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f libs/CMakeFiles/server_libs.dir/build.make libs/CMakeFiles/server_libs.dir/Server.s
+	cd /home/uttkarsh/Distributed_file_management_system/project/build && $(MAKE) $(MAKESILENT) -f libs/CMakeFiles/server_lib.dir/build.make libs/CMakeFiles/server_lib.dir/Server.s
 .PHONY : Server.s
 
 # Help Target
@@ -182,8 +182,8 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... client_libs"
-	@echo "... server_libs"
+	@echo "... client_lib"
+	@echo "... server_lib"
 	@echo "... Client.o"
 	@echo "... Client.i"
 	@echo "... Client.s"

@@ -14,4 +14,5 @@
 
 #define MAX_CLIENTS 200
 #define BUFF_LEN 1024
+#define END_MESSAGE_CHARACTER "$exit$"
 

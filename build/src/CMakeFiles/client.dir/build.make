@@ -92,7 +92,8 @@ client_EXTERNAL_OBJECTS =
 
 src/client: src/CMakeFiles/client.dir/client.o
 src/client: src/CMakeFiles/client.dir/build.make
-src/client: libs/libclient_libs.a
+src/client: libs/libclient_lib.a
+src/client: external/libimage_lib.a
 src/client: src/CMakeFiles/client.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable client"
 	cd /home/uttkarsh/Distributed_file_management_system/project/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/client.dir/link.txt --verbose=$(VERBOSE)

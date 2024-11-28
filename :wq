@@ -7,7 +7,6 @@
 #include <fstream>
 #include "../external/stb_image.h"
 #include "../external/stb_image_write.h"
-#include "Server.h"
 
 /*#define STB_IMAGE_WRITE_IMPLEMENTATION*/
 namespace Client {
@@ -73,52 +72,16 @@ namespace Client {
 
     std::cout << "Message received from server: " << buffer << "\n";
 }
-
-void Client::get_file_content(char* buff) const{
-    /*std::fstream f_obj;*/
-    /*char buffer[BUFF_LEN];*/
-    /*std::string file(buff);*/
-    /*f_obj.open(file,std::ios::in);*/
-    /*std::string file_lines;*/
-    /*while(getline(f_obj,file_lines)){*/
-    /*    //sending all the lines in the file to the client.*/
-    /*    memset(buffer,'\0',sizeof(buffer));*/
-    /*    strcpy(buffer,file_lines.c_str());*/
-    /*    write(this->sockfd,buffer,sizeof(buffer));*/
-    /*}*/
-    /*memset(&buffer,'\0',sizeof(buffer));*/
-    /*strcpy(buffer,END_MESSAGE_CHARACTER);*/
-    /*write(this->sockfd,buffer,sizeof(buffer));//to tell the client that the file has ended*/
-    /*f_obj.close();*/
-    char buffer[BUFF_LEN]="hello";
-    /*std::cout<<buffer<<std::endl;*/
-    while(strcmp(buffer,END_MESSAGE_CHARACTER) != 0){
-      /*std::cout<<"Hello"<<std::endl;*/
-      memset(buffer, '\0', sizeof(buffer));
-      read(this->sockfd, buffer, sizeof(buffer));
-      if(strlen(buffer)>0 && buffer[0]!='.' && strcmp(buffer,END_MESSAGE_CHARACTER)!=0){//filter out the hidden files
-        std::cout << buffer << "\n";
-      }
-    }
-    sleep(10);
-
-}
-
   void Client::get_file_names(char* buff) const {
     char buffer[BUFF_LEN];
-    while(strcmp(buffer,END_MESSAGE_CHARACTER) != 0){
+    std::cout<<"\n";
+
+    while(strcmp(buffer, END_MESSAGE_CHARACTER) != 0) {
       memset(buffer, '\0', sizeof(buffer));
       read(this->sockfd, buffer, sizeof(buffer));
-      if(strlen(buffer)>0 && buffer[0]!='.' && strcmp(buffer,END_MESSAGE_CHARACTER)!=0){//filter out the hidden files
-        std::cout << buffer << "\n";
-      }
+      std::cout << buffer << "\n";
     }
-    std::cout<<"File received"<<std::endl;
-    std::string file;
-    std::cout<<"Enter the file name"<<std::endl;
-    std::cin>>file;
-    write(this->sockfd,file.c_str(),file.size());
-    get_file_content(buffer);//re,pve the variable we dont use it
+    std::cout << "End of the files present.\n";
   }
 
   unsigned char* Client::send_image(char* file_path) {
@@ -132,7 +95,6 @@ void Client::get_file_content(char* buff) const{
     return img; 
   }
   bool Client::write_image(char* img_data,char* path,int width,int height,int channels){
-
     stbi_write_png(path, width, height, channels, img_data, width * channels);
     return true;
   }

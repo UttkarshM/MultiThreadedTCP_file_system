@@ -1,6 +1,7 @@
 #include "../libs/Client.h"
 /*#include "../libs/Server.h"*/
 #include <netinet/in.h>
+/*#define STB_IMAGE_WRITE_IMPLEMENTATION*/
 
 using namespace std;
 
@@ -16,7 +17,9 @@ int main() {
     char buffer[] = "Hello from Client";
 
     /*client->transfer_via_socket(buffer);*/
-    client->chat_to_server();
+    /*client->chat_to_server();*/
+    /*client->get_file_names(".");*/
+    client->get_file_content(buffer);
 
     return 0;
 }

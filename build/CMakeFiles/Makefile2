@@ -63,26 +63,44 @@ CMAKE_BINARY_DIR = /home/uttkarsh/Distributed_file_management_system/project/bui
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
+all: external/all
 all: libs/all
 all: src/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
+preinstall: external/preinstall
 preinstall: libs/preinstall
 preinstall: src/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
+clean: external/clean
 clean: libs/clean
 clean: src/clean
 .PHONY : clean
 
 #=============================================================================
+# Directory level rules for directory external
+
+# Recursive "all" directory target.
+external/all: external/CMakeFiles/image_lib.dir/all
+.PHONY : external/all
+
+# Recursive "preinstall" directory target.
+external/preinstall:
+.PHONY : external/preinstall
+
+# Recursive "clean" directory target.
+external/clean: external/CMakeFiles/image_lib.dir/clean
+.PHONY : external/clean
+
+#=============================================================================
 # Directory level rules for directory libs
 
 # Recursive "all" directory target.
-libs/all: libs/CMakeFiles/client_libs.dir/all
-libs/all: libs/CMakeFiles/server_libs.dir/all
+libs/all: libs/CMakeFiles/server_lib.dir/all
+libs/all: libs/CMakeFiles/client_lib.dir/all
 .PHONY : libs/all
 
 # Recursive "preinstall" directory target.
@@ -90,8 +108,8 @@ libs/preinstall:
 .PHONY : libs/preinstall
 
 # Recursive "clean" directory target.
-libs/clean: libs/CMakeFiles/client_libs.dir/clean
-libs/clean: libs/CMakeFiles/server_libs.dir/clean
+libs/clean: libs/CMakeFiles/server_lib.dir/clean
+libs/clean: libs/CMakeFiles/client_lib.dir/clean
 .PHONY : libs/clean
 
 #=============================================================================
@@ -112,62 +130,89 @@ src/clean: src/CMakeFiles/server.dir/clean
 .PHONY : src/clean
 
 #=============================================================================
-# Target rules for target libs/CMakeFiles/client_libs.dir
+# Target rules for target external/CMakeFiles/image_lib.dir
 
 # All Build rule for target.
-libs/CMakeFiles/client_libs.dir/all:
-	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/client_libs.dir/build.make libs/CMakeFiles/client_libs.dir/depend
-	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/client_libs.dir/build.make libs/CMakeFiles/client_libs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles --progress-num=3,4 "Built target client_libs"
-.PHONY : libs/CMakeFiles/client_libs.dir/all
+external/CMakeFiles/image_lib.dir/all:
+	$(MAKE) $(MAKESILENT) -f external/CMakeFiles/image_lib.dir/build.make external/CMakeFiles/image_lib.dir/depend
+	$(MAKE) $(MAKESILENT) -f external/CMakeFiles/image_lib.dir/build.make external/CMakeFiles/image_lib.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles --progress-num=5,6 "Built target image_lib"
+.PHONY : external/CMakeFiles/image_lib.dir/all
 
 # Build rule for subdir invocation for target.
-libs/CMakeFiles/client_libs.dir/rule: cmake_check_build_system
+external/CMakeFiles/image_lib.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libs/CMakeFiles/client_libs.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 external/CMakeFiles/image_lib.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles 0
-.PHONY : libs/CMakeFiles/client_libs.dir/rule
+.PHONY : external/CMakeFiles/image_lib.dir/rule
 
 # Convenience name for target.
-client_libs: libs/CMakeFiles/client_libs.dir/rule
-.PHONY : client_libs
+image_lib: external/CMakeFiles/image_lib.dir/rule
+.PHONY : image_lib
 
 # clean rule for target.
-libs/CMakeFiles/client_libs.dir/clean:
-	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/client_libs.dir/build.make libs/CMakeFiles/client_libs.dir/clean
-.PHONY : libs/CMakeFiles/client_libs.dir/clean
+external/CMakeFiles/image_lib.dir/clean:
+	$(MAKE) $(MAKESILENT) -f external/CMakeFiles/image_lib.dir/build.make external/CMakeFiles/image_lib.dir/clean
+.PHONY : external/CMakeFiles/image_lib.dir/clean
 
 #=============================================================================
-# Target rules for target libs/CMakeFiles/server_libs.dir
+# Target rules for target libs/CMakeFiles/server_lib.dir
 
 # All Build rule for target.
-libs/CMakeFiles/server_libs.dir/all:
-	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/server_libs.dir/build.make libs/CMakeFiles/server_libs.dir/depend
-	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/server_libs.dir/build.make libs/CMakeFiles/server_libs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles --progress-num=7,8 "Built target server_libs"
-.PHONY : libs/CMakeFiles/server_libs.dir/all
+libs/CMakeFiles/server_lib.dir/all: external/CMakeFiles/image_lib.dir/all
+	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/server_lib.dir/build.make libs/CMakeFiles/server_lib.dir/depend
+	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/server_lib.dir/build.make libs/CMakeFiles/server_lib.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles --progress-num=9,10 "Built target server_lib"
+.PHONY : libs/CMakeFiles/server_lib.dir/all
 
 # Build rule for subdir invocation for target.
-libs/CMakeFiles/server_libs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libs/CMakeFiles/server_libs.dir/all
+libs/CMakeFiles/server_lib.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles 4
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libs/CMakeFiles/server_lib.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles 0
-.PHONY : libs/CMakeFiles/server_libs.dir/rule
+.PHONY : libs/CMakeFiles/server_lib.dir/rule
 
 # Convenience name for target.
-server_libs: libs/CMakeFiles/server_libs.dir/rule
-.PHONY : server_libs
+server_lib: libs/CMakeFiles/server_lib.dir/rule
+.PHONY : server_lib
 
 # clean rule for target.
-libs/CMakeFiles/server_libs.dir/clean:
-	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/server_libs.dir/build.make libs/CMakeFiles/server_libs.dir/clean
-.PHONY : libs/CMakeFiles/server_libs.dir/clean
+libs/CMakeFiles/server_lib.dir/clean:
+	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/server_lib.dir/build.make libs/CMakeFiles/server_lib.dir/clean
+.PHONY : libs/CMakeFiles/server_lib.dir/clean
+
+#=============================================================================
+# Target rules for target libs/CMakeFiles/client_lib.dir
+
+# All Build rule for target.
+libs/CMakeFiles/client_lib.dir/all: external/CMakeFiles/image_lib.dir/all
+	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/client_lib.dir/build.make libs/CMakeFiles/client_lib.dir/depend
+	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/client_lib.dir/build.make libs/CMakeFiles/client_lib.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles --progress-num=3,4 "Built target client_lib"
+.PHONY : libs/CMakeFiles/client_lib.dir/all
+
+# Build rule for subdir invocation for target.
+libs/CMakeFiles/client_lib.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles 4
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libs/CMakeFiles/client_lib.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles 0
+.PHONY : libs/CMakeFiles/client_lib.dir/rule
+
+# Convenience name for target.
+client_lib: libs/CMakeFiles/client_lib.dir/rule
+.PHONY : client_lib
+
+# clean rule for target.
+libs/CMakeFiles/client_lib.dir/clean:
+	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/client_lib.dir/build.make libs/CMakeFiles/client_lib.dir/clean
+.PHONY : libs/CMakeFiles/client_lib.dir/clean
 
 #=============================================================================
 # Target rules for target src/CMakeFiles/client.dir
 
 # All Build rule for target.
-src/CMakeFiles/client.dir/all: libs/CMakeFiles/client_libs.dir/all
+src/CMakeFiles/client.dir/all: external/CMakeFiles/image_lib.dir/all
+src/CMakeFiles/client.dir/all: libs/CMakeFiles/client_lib.dir/all
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/client.dir/build.make src/CMakeFiles/client.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/client.dir/build.make src/CMakeFiles/client.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles --progress-num=1,2 "Built target client"
@@ -175,7 +220,7 @@ src/CMakeFiles/client.dir/all: libs/CMakeFiles/client_libs.dir/all
 
 # Build rule for subdir invocation for target.
 src/CMakeFiles/client.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/client.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles 0
 .PHONY : src/CMakeFiles/client.dir/rule
@@ -193,15 +238,16 @@ src/CMakeFiles/client.dir/clean:
 # Target rules for target src/CMakeFiles/server.dir
 
 # All Build rule for target.
-src/CMakeFiles/server.dir/all: libs/CMakeFiles/server_libs.dir/all
+src/CMakeFiles/server.dir/all: external/CMakeFiles/image_lib.dir/all
+src/CMakeFiles/server.dir/all: libs/CMakeFiles/server_lib.dir/all
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/server.dir/build.make src/CMakeFiles/server.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/server.dir/build.make src/CMakeFiles/server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles --progress-num=5,6 "Built target server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles --progress-num=7,8 "Built target server"
 .PHONY : src/CMakeFiles/server.dir/all
 
 # Build rule for subdir invocation for target.
 src/CMakeFiles/server.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/server.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles 0
 .PHONY : src/CMakeFiles/server.dir/rule

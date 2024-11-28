@@ -22,6 +22,8 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
   /usr/include/bits/byteswap.h \
   /usr/include/bits/confname.h \
   /usr/include/bits/cpu-set.h \
+  /usr/include/bits/dirent.h \
+  /usr/include/bits/dirent_ext.h \
   /usr/include/bits/endian.h \
   /usr/include/bits/endianness.h \
   /usr/include/bits/environments.h \
@@ -32,8 +34,10 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
   /usr/include/bits/getopt_posix.h \
   /usr/include/bits/in.h \
   /usr/include/bits/libc-header-start.h \
+  /usr/include/bits/local_lim.h \
   /usr/include/bits/locale.h \
   /usr/include/bits/long-double.h \
+  /usr/include/bits/posix1_lim.h \
   /usr/include/bits/posix_opt.h \
   /usr/include/bits/pthread_stack_min-dynamic.h \
   /usr/include/bits/pthreadtypes-arch.h \
@@ -193,6 +197,7 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
   /usr/include/ctype.h \
+  /usr/include/dirent.h \
   /usr/include/endian.h \
   /usr/include/errno.h \
   /usr/include/features-time64.h \
@@ -201,6 +206,7 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
   /usr/include/gnu/stubs.h \
   /usr/include/linux/close_range.h \
   /usr/include/linux/errno.h \
+  /usr/include/linux/limits.h \
   /usr/include/linux/posix_types.h \
   /usr/include/linux/stddef.h \
   /usr/include/locale.h \
@@ -245,6 +251,8 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
 /usr/include/locale.h:
 
 /usr/include/linux/stddef.h:
+
+/usr/include/linux/limits.h:
 
 /usr/include/gnu/stubs-64.h:
 
@@ -296,6 +304,8 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
 
 /usr/include/c++/14.2.1/cstdlib:
 
+/usr/include/dirent.h:
+
 /usr/include/c++/14.2.1/cstdio:
 
 /usr/include/c++/14.2.1/cstddef:
@@ -334,23 +344,9 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
 
 /usr/include/c++/14.2.1/bits/ptr_traits.h:
 
-/usr/include/c++/14.2.1/ext/atomicity.h:
+/usr/include/c++/14.2.1/bits/ostream_insert.h:
 
-/usr/include/bits/types/__FILE.h:
-
-/usr/include/linux/posix_types.h:
-
-/usr/include/c++/14.2.1/bits/charconv.h:
-
-/usr/include/c++/14.2.1/bits/exception.h:
-
-/usr/include/bits/types/FILE.h:
-
-/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr.h:
-
-/usr/include/bits/types.h:
-
-/usr/include/bits/getopt_core.h:
+/usr/include/c++/14.2.1/bits/ostream.tcc:
 
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/ctype_inline.h:
 
@@ -359,18 +355,6 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
 /usr/include/bits/types/time_t.h:
 
 /usr/include/bits/types/struct_timeval.h:
-
-/usr/include/bits/stdint-uintn.h:
-
-/usr/include/bits/sched.h:
-
-/usr/include/time.h:
-
-/usr/include/bits/socket.h:
-
-/usr/include/bits/types/cookie_io_functions_t.h:
-
-/usr/include/c++/14.2.1/bits/ios_base.h:
 
 /usr/include/linux/close_range.h:
 
@@ -392,15 +376,35 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
 
 /usr/include/bits/types/struct___jmp_buf_tag.h:
 
-/usr/include/alloca.h:
+/usr/include/c++/14.2.1/ext/atomicity.h:
 
-/usr/include/bits/types/__fpos64_t.h:
+/usr/include/bits/types/__FILE.h:
+
+/usr/include/linux/posix_types.h:
+
+/usr/include/c++/14.2.1/bits/charconv.h:
+
+/usr/include/c++/14.2.1/bits/exception.h:
+
+/usr/include/alloca.h:
 
 /usr/include/c++/14.2.1/bits/uses_allocator_args.h:
 
 /usr/include/bits/select.h:
 
 /usr/include/c++/14.2.1/bits/alloc_traits.h:
+
+/usr/include/bits/sched.h:
+
+/usr/include/bits/stdint-uintn.h:
+
+/usr/include/time.h:
+
+/usr/include/bits/socket.h:
+
+/usr/include/bits/types/cookie_io_functions_t.h:
+
+/usr/include/c++/14.2.1/bits/ios_base.h:
 
 /usr/include/gnu/stubs.h:
 
@@ -410,7 +414,7 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
 
 /usr/include/bits/endian.h:
 
-/usr/include/bits/long-double.h:
+/usr/include/bits/posix1_lim.h:
 
 /usr/include/bits/libc-header-start.h:
 
@@ -422,6 +426,12 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
 
 /usr/include/bits/waitflags.h:
 
+/usr/include/bits/getopt_core.h:
+
+/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr.h:
+
+/usr/include/bits/types.h:
+
 /usr/include/asm/bitsperlong.h:
 
 /usr/include/c++/14.2.1/bits/nested_exception.h:
@@ -429,6 +439,16 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
 /usr/include/sys/single_threaded.h:
 
 /usr/include/c++/14.2.1/bits/new_allocator.h:
+
+/usr/include/bits/thread-shared-types.h:
+
+/usr/include/c++/14.2.1/bits/uses_allocator.h:
+
+/usr/include/bits/getopt_posix.h:
+
+/usr/include/c++/14.2.1/bits/postypes.h:
+
+/usr/include/arpa/inet.h:
 
 /home/uttkarsh/Distributed_file_management_system/project/libs/Server.h:
 
@@ -439,8 +459,6 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
 /usr/include/asm/sockios.h:
 
 /usr/include/c++/14.2.1/bits/locale_classes.tcc:
-
-/usr/include/c++/14.2.1/bits/ostream_insert.h:
 
 /usr/include/c++/14.2.1/bits/stl_iterator_base_types.h:
 
@@ -472,6 +490,18 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
 
 /home/uttkarsh/Distributed_file_management_system/project/libs/core.h:
 
+/usr/include/bits/local_lim.h:
+
+/usr/include/semaphore.h:
+
+/usr/include/c++/14.2.1/bits/predefined_ops.h:
+
+/usr/include/bits/stdio_lim.h:
+
+/usr/include/bits/time.h:
+
+/usr/include/bits/types/__mbstate_t.h:
+
 /usr/include/bits/stdlib-float.h:
 
 /usr/include/bits/time64.h:
@@ -479,6 +509,8 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h:
 
 /usr/include/bits/byteswap.h:
+
+/usr/include/bits/dirent.h:
 
 /usr/include/c++/14.2.1/typeinfo:
 
@@ -498,11 +530,15 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
 
 /usr/include/c++/14.2.1/bits/functexcept.h:
 
+/usr/include/bits/long-double.h:
+
+/usr/include/bits/dirent_ext.h:
+
+/usr/include/bits/environments.h:
+
 /usr/include/features.h:
 
 /usr/include/bits/endianness.h:
-
-/usr/include/bits/environments.h:
 
 /usr/include/bits/locale.h:
 
@@ -522,15 +558,9 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
 
 /usr/include/bits/floatn-common.h:
 
-/usr/include/bits/thread-shared-types.h:
+/usr/include/bits/types/FILE.h:
 
-/usr/include/c++/14.2.1/bits/postypes.h:
-
-/usr/include/arpa/inet.h:
-
-/usr/include/c++/14.2.1/bits/uses_allocator.h:
-
-/usr/include/bits/getopt_posix.h:
+/usr/include/bits/types/__fpos64_t.h:
 
 /usr/include/bits/types/__locale_t.h:
 
@@ -557,8 +587,6 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
 /usr/include/asm-generic/sockios.h:
 
 /usr/include/bits/types/sigset_t.h:
-
-/usr/include/c++/14.2.1/bits/ostream.tcc:
 
 /usr/include/c++/14.2.1/initializer_list:
 
@@ -629,16 +657,6 @@ src/CMakeFiles/server.dir/main.o: /home/uttkarsh/Distributed_file_management_sys
 /usr/include/bits/floatn.h:
 
 /usr/include/c++/14.2.1/bits/cxxabi_init_exception.h:
-
-/usr/include/semaphore.h:
-
-/usr/include/bits/stdio_lim.h:
-
-/usr/include/bits/time.h:
-
-/usr/include/bits/types/__mbstate_t.h:
-
-/usr/include/c++/14.2.1/bits/predefined_ops.h:
 
 /usr/include/c++/14.2.1/bits/exception_defines.h:
 

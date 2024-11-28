@@ -117,30 +117,43 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named client_libs
+# Target rules for targets named image_lib
 
 # Build rule for target.
-client_libs: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 client_libs
-.PHONY : client_libs
+image_lib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 image_lib
+.PHONY : image_lib
 
 # fast build rule for target.
-client_libs/fast:
-	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/client_libs.dir/build.make libs/CMakeFiles/client_libs.dir/build
-.PHONY : client_libs/fast
+image_lib/fast:
+	$(MAKE) $(MAKESILENT) -f external/CMakeFiles/image_lib.dir/build.make external/CMakeFiles/image_lib.dir/build
+.PHONY : image_lib/fast
 
 #=============================================================================
-# Target rules for targets named server_libs
+# Target rules for targets named server_lib
 
 # Build rule for target.
-server_libs: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 server_libs
-.PHONY : server_libs
+server_lib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 server_lib
+.PHONY : server_lib
 
 # fast build rule for target.
-server_libs/fast:
-	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/server_libs.dir/build.make libs/CMakeFiles/server_libs.dir/build
-.PHONY : server_libs/fast
+server_lib/fast:
+	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/server_lib.dir/build.make libs/CMakeFiles/server_lib.dir/build
+.PHONY : server_lib/fast
+
+#=============================================================================
+# Target rules for targets named client_lib
+
+# Build rule for target.
+client_lib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 client_lib
+.PHONY : client_lib
+
+# fast build rule for target.
+client_lib/fast:
+	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/client_lib.dir/build.make libs/CMakeFiles/client_lib.dir/build
+.PHONY : client_lib/fast
 
 #=============================================================================
 # Target rules for targets named client
@@ -177,9 +190,10 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... client"
-	@echo "... client_libs"
+	@echo "... client_lib"
+	@echo "... image_lib"
 	@echo "... server"
-	@echo "... server_libs"
+	@echo "... server_lib"
 .PHONY : help
 
 

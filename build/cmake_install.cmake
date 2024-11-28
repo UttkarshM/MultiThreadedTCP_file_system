@@ -44,6 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
+  include("/home/uttkarsh/Distributed_file_management_system/project/build/external/cmake_install.cmake")
   include("/home/uttkarsh/Distributed_file_management_system/project/build/libs/cmake_install.cmake")
   include("/home/uttkarsh/Distributed_file_management_system/project/build/src/cmake_install.cmake")
 

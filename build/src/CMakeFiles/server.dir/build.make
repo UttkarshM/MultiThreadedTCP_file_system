@@ -92,7 +92,8 @@ server_EXTERNAL_OBJECTS =
 
 src/server: src/CMakeFiles/server.dir/main.o
 src/server: src/CMakeFiles/server.dir/build.make
-src/server: libs/libserver_libs.a
+src/server: libs/libserver_lib.a
+src/server: external/libimage_lib.a
 src/server: src/CMakeFiles/server.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/uttkarsh/Distributed_file_management_system/project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable server"
 	cd /home/uttkarsh/Distributed_file_management_system/project/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/server.dir/link.txt --verbose=$(VERBOSE)

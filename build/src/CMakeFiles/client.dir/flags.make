@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/uttkarsh/Distributed_file_management_system/project/libs
+CXX_INCLUDES = -I/home/uttkarsh/Distributed_file_management_system/project/src -I/home/uttkarsh/Distributed_file_management_system/project/libs -I/home/uttkarsh/Distributed_file_management_system/project/external
 
-CXX_FLAGS = 
+CXX_FLAGS = -fPIE
 

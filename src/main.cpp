@@ -19,7 +19,7 @@ static void* temp(){
   /*server->show_directories_files("CMakeLists.txt");*/
   /*server->chat_to_client(id);*/
   /*server->get_file_content("CMakeLists.txt");*/
-  sleep(5);
+  /*sleep(5);*/ //to show multithreadingness
   return nullptr;
 }
 static void* task(void* arg){

@@ -66,13 +66,20 @@ namespace Client {
     std::cout << "Message received from server: " << buffer << "\n";
 }
 
-void Client::get_file_content() const {
+void Client::get_file_content(const char* buff) const {
+
     char buffer[BUFF_LEN] = {0};
+    std::string paths = DATA_PATH_CLIENT;
+    paths+="_copy_";
+    paths+=buff;
+    std::fstream file(paths.c_str(),std::ios::out|std::ios::app);
+    file.write("",0);
     while (strcmp(buffer, END_MESSAGE_CHARACTER) != 0) {
         memset(buffer, '\0', sizeof(buffer));
         read(this->sockfd, buffer, sizeof(buffer));
         if (strlen(buffer) > 0 && buffer[0] != '.' && strcmp(buffer, END_MESSAGE_CHARACTER) != 0) { 
-            std::cout << buffer << "\n"; // Print file content
+            /*std::cout << buffer << "\n"; // Print file content*/
+        file<<buffer<<std::endl;
         }
     }
     std::cout << "File transfer completed.\n";
@@ -87,12 +94,12 @@ void Client::get_file_names() const {
             std::cout << buffer << "\n"; // Print file name
         }
     }
-    std::cout << "File list received.\n";
+    /*std::cout << "File list received.\n";*/
     std::string file;
     std::cout << "Enter the file name: ";
     std::cin >> file;
     write(this->sockfd, file.c_str(), file.size());
-    get_file_content();
+    get_file_content(file.c_str());
 }
 
   unsigned char* Client::send_image(char* file_path) {

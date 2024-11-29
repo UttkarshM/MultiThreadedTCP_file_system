@@ -33,7 +33,7 @@ namespace Client {
 			void get_file_names() const;
 			unsigned char* send_image(char* file_path);
 			bool write_image(char* img_data, char* path, int width, int height, int channels);
-      void get_file_content() const;
+      void get_file_content(const char* buff) const;
 
 
 		private:

@@ -127,11 +127,13 @@ void Server::get_file_content(char* buff) const {
     std::fstream f_obj;
     f_obj.open(buff, std::ios::in);
 
+    memset(buffer,'\0',sizeof(buffer));
+    strcpy(buff,DATA_PATH_CLIENT);
+
     if (!f_obj.is_open()) {
         std::cerr << "Error opening file: " << buff << std::endl;
         return;
     }
-
     std::string file_lines;
     while (getline(f_obj, file_lines)) {
         memset(buffer, '\0', sizeof(buffer));
@@ -146,7 +148,7 @@ void Server::get_file_content(char* buff) const {
 }
 
 void Server::show_directories_files(char* path) {
-    DIR* dir = opendir(path);
+    DIR* dir = opendir(DATA_PATH_SERVER);
     if (!dir) {
         std::cerr << "Error: Unable to open directory " << path << std::endl;
         return;
@@ -181,7 +183,6 @@ void Server::show_directories_files(char* path) {
     unsigned char* img = stbi_load(file_path, &width, &height, &channels, 0);
     if(img == NULL){
       printf("Error in loading the image \n");
-      /*exit(1);*/
     }
     std::cout<<width<<" - "<<height<<" - "<<channels<<"\n";
     stbi_image_free(img);

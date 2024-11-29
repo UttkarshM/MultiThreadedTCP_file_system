@@ -4,6 +4,7 @@
 #include "Server.h"
 
 #include <cstdio>
+#include <iterator>
 #include <pthread.h>
 #include <unistd.h>
 #include <string.h>
@@ -20,7 +21,7 @@ namespace Server{
     void server_queue_push(void* function(void*)) {
         if (pthread_create(&readerthreads[++top], NULL, function, NULL) != 0) {
             std::cerr << "Error: Failed to create thread" << std::endl;
-            --top; // Rollback increment
+            --top; 
         } else {
             server_queue_pop();
         }
@@ -29,7 +30,7 @@ namespace Server{
     void server_queue_pop() {
         if (pthread_join(readerthreads[++rear], NULL) != 0) {
             std::cerr << "Error: Failed to join thread" << std::endl;
-            --rear; // Rollback increment
+            --rear; 
         }
     }
 
@@ -112,83 +113,65 @@ namespace Server{
 
     std::cout << "Enter the message to be sent\n";
     std::cin.getline(buffer, sizeof(buffer));
-    ssize_t bytes_written = write(this->new_sock_fd, buffer, strlen(buffer) + 1);
+    ssize_t bytes_written = write(this->new_sock_fd, buffer, sizeof(buffer));
+    
     if (bytes_written < 0) {
       std::cerr << "Failed to send message to client \n";
       return;
     }
     memset(buffer, '\0', sizeof(buffer));
   }
-  void Server::get_file_content(char* buff) const {
 
-    char buffer[BUFF_LEN];
-    std::cout<<top<<std::endl;
-
-
-    // Get current working directory
-    /*if (getcwd(buffer, sizeof(buffer)) != nullptr) {*/
-    /*    std::cout << "Current working directory: " << buffer << std::endl;*/
-    /*} else {*/
-    /*    std::cerr << "Error: Unable to get the current working directory." << std::endl;*/
-    /*}*/
-
-    /*read(this->new_sock_fd,buffer,sizeof(buffer));*/
-    /*std::cout<<buffer<<std::endl;*/
-    std::cout<<"halo"<<endl;
-    
+void Server::get_file_content(char* buff) const {
+    char buffer[BUFF_LEN] = {0};
     std::fstream f_obj;
-    std::string file(buff);
-    f_obj.open(file, std::ios::in);
+    f_obj.open(buff, std::ios::in);
+
+    if (!f_obj.is_open()) {
+        std::cerr << "Error opening file: " << buff << std::endl;
+        return;
+    }
+
     std::string file_lines;
-    while(getline(f_obj, file_lines)){
-        //sending all the lines in the file to the client.
+    while (getline(f_obj, file_lines)) {
         memset(buffer, '\0', sizeof(buffer));
         strcpy(buffer, file_lines.c_str());
         write(this->new_sock_fd, buffer, sizeof(buffer));
-        /*std::cout<<buffer<<std::endl;*/
-        /*std::cout<<"enters"<<std::endl;*/
     }
-        /*std::cout<<"enters"<<std::endl;*/
-    memset(&buffer, '\0', sizeof(buffer));
+
+    memset(buffer, '\0', sizeof(buffer));
     strcpy(buffer, END_MESSAGE_CHARACTER);
-    write(this->new_sock_fd, buffer, sizeof(buffer));//to tell the client that the file has ended
+    write(this->new_sock_fd, buffer, sizeof(buffer));
     f_obj.close();
-  }
+}
 
-
-  void Server::show_directories_files(char* path){
-
-    std::fstream f_obj;
-    int i=0;
-    char buffer[BUFF_LEN];
-
-    DIR* dir;
-    struct dirent* en;
-    dir=opendir(path);
-    while(i==0){
-      if(dir==NULL){
-        break;
-      }
-      while((en=readdir(dir))!=NULL){
-        std::string std= en->d_name;
-        memset(&buffer,'\0',sizeof(buffer));
-        strcpy(buffer,std.c_str());
-        if(sizeof(buffer)>3){
-          /*cout<<buffer<<endl;*/
-          write(this->new_sock_fd,buffer,sizeof(buffer));
-        }
-        //some random dots were appearing in output so tryin to remove them
-      }
-
-      memset(&buffer,'\0',sizeof(buffer));
-      strcpy(buffer,END_MESSAGE_CHARACTER);
-      write(this->new_sock_fd,buffer,sizeof(buffer));//to tell that the list of files is over
+void Server::show_directories_files(char* path) {
+    DIR* dir = opendir(path);
+    if (!dir) {
+        std::cerr << "Error: Unable to open directory " << path << std::endl;
+        return;
     }
-    read(this->new_sock_fd,buffer,sizeof(buffer));
-    closedir(dir);
-    cout<<buffer<<endl;
+
+    char buffer[BUFF_LEN] = {0};
+    struct dirent* en;
+
+    while ((en = readdir(dir)) != NULL) {
+        std::string file_name = en->d_name;
+        if (file_name != "." && file_name != "..") {
+            memset(buffer, '\0', sizeof(buffer));
+            strcpy(buffer, file_name.c_str());
+            write(this->new_sock_fd, buffer, sizeof(buffer));
+        }
+    }
+
+    memset(buffer, '\0', sizeof(buffer));
+    strcpy(buffer, END_MESSAGE_CHARACTER);
+    write(this->new_sock_fd, buffer, sizeof(buffer));
+
+    read(this->new_sock_fd, buffer, sizeof(buffer));
     get_file_content(buffer);
-  }
+    closedir(dir);
+}
 
 
   unsigned char* Server::send_image(char* file_path) {

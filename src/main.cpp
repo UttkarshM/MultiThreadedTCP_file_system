@@ -11,16 +11,15 @@ static void* temp(){
   server->accept_tcp();
   int id=0;
   char buffer[256];
-  /*cout<<"Enter the directory:\n";*/
-  /*cin>>buffer;*/
 
   /*server->get_file_content(buffer);*/
 
   /*server->send_image("cat.jpeg");*/
-  /*server->show_directories_files(buffer);*/
+  server->show_directories_files(".");
   /*server->show_directories_files("CMakeLists.txt");*/
   /*server->chat_to_client(id);*/
-  server->get_file_content("CMakeLists.txt");
+  /*server->get_file_content("CMakeLists.txt");*/
+  sleep(5);
   return nullptr;
 }
 static void* task(void* arg){

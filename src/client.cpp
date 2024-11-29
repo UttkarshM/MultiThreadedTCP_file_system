@@ -18,8 +18,9 @@ int main() {
 
     /*client->transfer_via_socket(buffer);*/
     /*client->chat_to_server();*/
-    /*client->get_file_names(".");*/
-    client->get_file_content(buffer);
+    client->get_file_names();
+    
+    /*client->get_file_content(buffer);*/
 
     return 0;
 }

@@ -7,6 +7,12 @@ add_library(client_lib STATIC ${CLIENT_LIBS})
 target_link_libraries(client_lib PUBLIC image_lib)
 target_link_libraries(server_lib PUBLIC image_lib)
 
+# Windows-specific libraries
+if(WIN32)
+    target_link_libraries(client_lib PUBLIC ws2_32 wsock32)
+    target_link_libraries(server_lib PUBLIC ws2_32 wsock32)
+endif()
+
 target_include_directories(client_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(server_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 

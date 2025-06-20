@@ -1,14 +1,28 @@
 #include "../libs/Client.h"
 /*#include "../libs/Server.h"*/
-#include <netinet/in.h>
+
+#ifdef _WIN32
+    #include <winsock2.h>
+#else
+    #include <netinet/in.h>
+#endif
 /*#define STB_IMAGE_WRITE_IMPLEMENTATION*/
 
 using namespace std;
 
 int main() {
-    Client::Client* client = new Client::Client();  // Create client object
-    struct sockaddr_in server_address;  // To hold server address details
-    int port = 14000;  // Define the port for the connection
+#ifdef _WIN32
+    // Initialize Winsock
+    WSADATA wsaData;
+    int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (result != 0) {
+        std::cerr << "WSAStartup failed: " << result << std::endl;
+        return 1;
+    }
+#endif
+    Client::Client* client = new Client::Client();
+    struct sockaddr_in server_address; 
+    int port = 14000; 
 
     client->create_tcp_socket();
 
@@ -16,11 +30,8 @@ int main() {
 
     char buffer[] = "Hello from Client";
 
-    /*client->transfer_via_socket(buffer);*/
-    /*client->chat_to_server();*/
     client->get_file_names();
-    
-    /*client->get_file_content(buffer);*/
+
 
     return 0;
 }

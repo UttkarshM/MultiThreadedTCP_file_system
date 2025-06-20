@@ -5,19 +5,49 @@
 
 #include <cstdio>
 #include <iterator>
-#include <pthread.h>
-#include <unistd.h>
 #include <string.h>
 #include <fstream>
 #include "../external/stb_image.h"
 #include "../external/stb_image_write.h"
 
+#ifndef _WIN32
+    #include <pthread.h>
+    #include <unistd.h>
+#endif
+
 using namespace std;
 
 namespace Server{
-  pthread_t readerthreads[100];
-  int top = -1;
-  int rear = -1;
+#ifdef _WIN32
+    std::thread readerthreads[100];
+    int top = -1;
+    int rear = -1;
+    
+    void server_queue_push(void* (*function)(void*)) {
+        try {
+            readerthreads[++top] = std::thread([function](){ function(nullptr); });
+            server_queue_pop();
+        } catch (const std::exception& e) {
+            std::cerr << "Error: Failed to create thread - " << e.what() << std::endl;
+            --top;
+        }
+    }
+
+    void server_queue_pop() {
+        try {
+            if (readerthreads[++rear].joinable()) {
+                readerthreads[rear].join();
+            }
+        } catch (const std::exception& e) {
+            std::cerr << "Error: Failed to join thread - " << e.what() << std::endl;
+            --rear;
+        }
+    }
+#else
+    pthread_t readerthreads[100];
+    int top = -1;
+    int rear = -1;
+    
     void server_queue_push(void* function(void*)) {
         if (pthread_create(&readerthreads[++top], NULL, function, NULL) != 0) {
             std::cerr << "Error: Failed to create thread" << std::endl;
@@ -33,6 +63,7 @@ namespace Server{
             --rear; 
         }
     }
+#endif
 
   void Server::create_tcp_socket(){
     int tempsockfd=socket(AF_INET,SOCK_STREAM,0);//tcp  connection
@@ -44,10 +75,18 @@ namespace Server{
   }
   void Server::reuse_tcp_socket(){
     int opt=1;
+#ifdef _WIN32
+    // Windows doesn't support SO_REUSEPORT, only SO_REUSEADDR
+    if(setsockopt(sockfd,SOL_SOCKET,SO_REUSEADDR,(char*)&opt,sizeof(opt))){
+      cout<<"SETSOCKOPT\n";//this is for reusing a port if its not free and is dealing with another
+      /*exit(1);*/
+    }
+#else
     if(setsockopt(sockfd,SOL_SOCKET,SO_REUSEADDR | SO_REUSEPORT,&opt,sizeof(opt))){
       cout<<"SETSOCKOPT\n";//this is for reusing a port if its not free and is dealing with another
       /*exit(1);*/
     }
+#endif
   }
 
   void Server::bind_tcp_socket(struct sockaddr_in& server,int port){
@@ -148,6 +187,24 @@ void Server::get_file_content(char* buff) const {
 }
 
 void Server::show_directories_files(char* path) {
+#ifdef _WIN32
+    std::string dir_path = DATA_PATH_SERVER;
+    char buffer[BUFF_LEN] = {0};
+    
+    try {
+        for (const auto& entry : std::filesystem::directory_iterator(dir_path)) {
+            if (entry.is_regular_file()) {
+                std::string file_name = entry.path().filename().string();
+                memset(buffer, '\0', sizeof(buffer));
+                strcpy(buffer, file_name.c_str());
+                write(this->new_sock_fd, buffer, sizeof(buffer));
+            }
+        }
+    } catch (const std::filesystem::filesystem_error& ex) {
+        std::cerr << "Error accessing directory: " << ex.what() << std::endl;
+        return;
+    }
+#else
     DIR* dir = opendir(DATA_PATH_SERVER);
     if (!dir) {
         std::cerr << "Error: Unable to open directory " << path << std::endl;
@@ -165,14 +222,16 @@ void Server::show_directories_files(char* path) {
             write(this->new_sock_fd, buffer, sizeof(buffer));
         }
     }
+    closedir(dir);
+#endif
 
+    // Send end message and get file request
     memset(buffer, '\0', sizeof(buffer));
     strcpy(buffer, END_MESSAGE_CHARACTER);
     write(this->new_sock_fd, buffer, sizeof(buffer));
 
     read(this->new_sock_fd, buffer, sizeof(buffer));
     get_file_content(buffer);
-    closedir(dir);
 }
 
 

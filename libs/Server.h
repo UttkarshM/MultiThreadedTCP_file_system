@@ -1,18 +1,29 @@
 #pragma once
 #include "core.h"
 #include <iostream>
-#include <pthread.h>
-#include <unistd.h>
-#include <dirent.h>
-#include <semaphore.h>
+
+#ifdef _WIN32
+    #include <filesystem>
+#else
+    #include <pthread.h>
+    #include <unistd.h>
+    #include <dirent.h>
+    #include <semaphore.h>
+#endif
 
 namespace Server {
     extern int top;
     extern int rear;
     extern int thread_no;
+#ifdef _WIN32
+    extern std::counting_semaphore<1024> x, y;
+    extern std::thread tid;
+    extern std::thread readerthreads[100];
+#else
     extern sem_t x, y;
     extern pthread_t tid;
     extern pthread_t readerthreads[100];
+#endif
     extern int readercount;
     extern int queue[1024 * 1024];
 

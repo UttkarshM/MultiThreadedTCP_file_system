@@ -1,7 +1,12 @@
 #include "../libs/Server.h"
-#include <netinet/in.h>
-#include <pthread.h>
-#include <unistd.h>
+
+#ifdef _WIN32
+    #include <winsock2.h>
+#else
+    #include <netinet/in.h>
+    #include <pthread.h>
+    #include <unistd.h>
+#endif
 
 using namespace std;
 
@@ -12,14 +17,8 @@ static void* temp(){
   int id=0;
   char buffer[256];
 
-  /*server->get_file_content(buffer);*/
-
-  /*server->send_image("cat.jpeg");*/
-  server->show_directories_files(".");
-  /*server->show_directories_files("CMakeLists.txt");*/
-  /*server->chat_to_client(id);*/
-  /*server->get_file_content("CMakeLists.txt");*/
-  /*sleep(5);*/ //to show multithreadingness
+  char path[] = ".";
+  server->show_directories_files(path);
   return nullptr;
 }
 static void* task(void* arg){
@@ -27,6 +26,16 @@ static void* task(void* arg){
 }
 int main()
 {
+#ifdef _WIN32
+    // Initialize Winsock
+    WSADATA wsaData;
+    int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (result != 0) {
+        std::cerr << "WSAStartup failed: " << result << std::endl;
+        return 1;
+    }
+#endif
+
   {
     struct sockaddr_in new_server[100];
     int index = 0;
@@ -44,5 +53,9 @@ int main()
       Server::server_queue_push(task);
     }
   }
+
+#ifdef _WIN32
+    WSACleanup();
+#endif
   return 0;
 }

@@ -3,9 +3,15 @@
 
 namespace Client {
 
+#ifdef _WIN32
+	extern std::counting_semaphore<1024> x, y;
+	extern std::thread tid;
+	extern std::thread readerthreads[100];
+#else
 	extern sem_t x, y;
 	extern pthread_t tid;
 	extern pthread_t readerthreads[100];
+#endif
 	extern int readercount;
 
 

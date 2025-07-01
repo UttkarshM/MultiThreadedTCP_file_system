@@ -1,1 +1,0 @@
-/usr/bin/c++ -rdynamic CMakeFiles/client.dir/client.o -o client  ../libs/libclient_lib.a ../external/libimage_lib.a

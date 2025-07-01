@@ -15,7 +15,7 @@ static void* temp(){
   /*server->get_file_content(buffer);*/
 
   /*server->send_image("cat.jpeg");*/
-  server->show_directories_files(".");
+  server->show_directories_files(DATA_PATH_SERVER);
   /*server->show_directories_files("CMakeLists.txt");*/
   /*server->chat_to_client(id);*/
   /*server->get_file_content("CMakeLists.txt");*/

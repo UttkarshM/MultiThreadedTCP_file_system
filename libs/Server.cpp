@@ -148,7 +148,21 @@ void Server::get_file_content(char* buff) const {
 }
 
 void Server::show_directories_files(char* path) {
-    DIR* dir = opendir(DATA_PATH_SERVER);
+    char cwd[1024];
+    getcwd(cwd, sizeof(cwd));
+    std::cout << "Current working directory: " << cwd << std::endl;
+    std::cout << "Trying to open directory: " << path << std::endl;
+
+    DIR* dir = opendir(path);
+    if (!dir) {
+        perror("opendir error");
+        std::cerr << "Error: Unable to open directory " << path << std::endl;
+        return;
+    }
+
+
+
+    dir = opendir(DATA_PATH_SERVER);
     if (!dir) {
         std::cerr << "Error: Unable to open directory " << path << std::endl;
         return;

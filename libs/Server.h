@@ -35,15 +35,12 @@ namespace Server {
         void bind_tcp_socket(struct sockaddr_in& server, int port);
         void listen_tcp_socket() const;
         void* accept_tcp();
-        void return_ptr(void* arg);
         void connect_tcp_socket() const;
         void transfer_via_socket(char* buffer);
 
         void show_directories_files(char* path);
         void chat_to_client(int id);
         void get_file_names(char* buff) const;
-        unsigned char* send_image(char* file_path);
-        bool write_image(char* img_data, char* path, int width, int height, int channels);
         void get_file_content(char* buffer) const;
 
     private:

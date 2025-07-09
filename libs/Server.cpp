@@ -1,6 +1,3 @@
-/*#define STB_IMAGE_WRITE_IMPLEMENTATION*/
-/*#define STB_IMAGE_IMPLEMENTATION*/
-
 #include "Server.h"
 
 #include <cstdio>
@@ -14,59 +11,79 @@
 
 using namespace std;
 
-namespace Server{
-  pthread_t readerthreads[100];
-  int top = -1;
-  int rear = -1;
+namespace Server {
+    pthread_t readerthreads[100];
+    int top = -1;
+    int rear = -1;
+    
     void server_queue_push(void* function(void*)) {
         if (pthread_create(&readerthreads[++top], NULL, function, NULL) != 0) {
-            std::cerr << "Error: Failed to create thread" << std::endl;
+            LOG_ERROR("Failed to create thread");
             --top; 
         } else {
+            LOG_THREAD("Thread created successfully (ID: %d)", top);
             server_queue_pop();
         }
     }
 
     void server_queue_pop() {
         if (pthread_join(readerthreads[++rear], NULL) != 0) {
-            std::cerr << "Error: Failed to join thread" << std::endl;
+            LOG_ERROR("Failed to join thread");
             --rear; 
+        } else {
+            LOG_THREAD("Thread joined successfully (ID: %d)", rear);
         }
     }
-
-  void Server::create_tcp_socket(){
-    int tempsockfd=socket(AF_INET,SOCK_STREAM,0);//tcp  connection
-    this->sockfd = tempsockfd; //
-    if(sockfd<0){
-      logger("socket");
+    void Server::create_tcp_socket() {
+        LOG_NETWORK("Creating TCP socket...");
+        int tempsockfd = socket(AF_INET, SOCK_STREAM, 0);
+        this->sockfd = tempsockfd;
+        
+        if (sockfd < 0) {
+            LOG_ERROR("Failed to create socket");
+            return;
+        }
+        
+        LOG_SUCCESS("TCP socket created successfully (fd: %d)", sockfd);
     }
-    std::cout<<"socket created successfully \n";
-  }
-  void Server::reuse_tcp_socket(){
-    int opt=1;
-    if(setsockopt(sockfd,SOL_SOCKET,SO_REUSEADDR | SO_REUSEPORT,&opt,sizeof(opt))){
-      cout<<"SETSOCKOPT\n";//this is for reusing a port if its not free and is dealing with another
-      /*exit(1);*/
+    void Server::reuse_tcp_socket() {
+        LOG_NETWORK("Configuring socket for reuse...");
+        int opt = 1;
+        
+        if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
+            LOG_ERROR("Failed to set socket options for reuse");
+            return;
+        }
+        
+        LOG_SUCCESS("Socket configured for reuse successfully");
     }
-  }
 
-  void Server::bind_tcp_socket(struct sockaddr_in& server,int port){
-    server.sin_family=AF_INET;
-    server.sin_port=htons(port);
-    this->port=port;
-    server.sin_addr.s_addr=htonl(INADDR_ANY);
+    void Server::bind_tcp_socket(struct sockaddr_in& server, int port) {
+        LOG_NETWORK("Binding socket to port %d...", port);
+        
+        server.sin_family = AF_INET;
+        server.sin_port = htons(port);
+        this->port = port;
+        server.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    if(bind(sockfd,(struct sockaddr*)&server,sizeof(server))<0){
-      logger("bind");
+        if (bind(sockfd, (struct sockaddr*)&server, sizeof(server)) < 0) {
+            LOG_ERROR("Failed to bind socket to port %d", port);
+            return;
+        }
+        
+        LOG_SUCCESS("Socket bound successfully to port %d", port);
     }
-    std::cout<<"binding was successfull\n";
-  }
 
-  void Server::listen_tcp_socket() const{
-    if(listen(sockfd,MAX_CLIENTS)<0){
-      logger("listening");
+    void Server::listen_tcp_socket() const {
+        LOG_NETWORK("Starting to listen for connections (max clients: %d)...", MAX_CLIENTS);
+        
+        if (listen(sockfd, MAX_CLIENTS) < 0) {
+            LOG_ERROR("Failed to listen on socket");
+            return;
+        }
+        
+        LOG_SUCCESS("Server listening for connections");
     }
-  }
   void* Server::accept_tcp() {
     struct sockaddr_in client_addr;
     socklen_t len = sizeof(client_addr);
@@ -188,25 +205,6 @@ void Server::show_directories_files(char* path) {
     get_file_content(buffer);
     closedir(dir);
 }
-
-
-  unsigned char* Server::send_image(char* file_path) {
-    show_directories_files(file_path);
-
-    int width, height, channels;
-    unsigned char* img = stbi_load(file_path, &width, &height, &channels, 0);
-    if(img == NULL){
-      printf("Error in loading the image \n");
-    }
-    std::cout<<width<<" - "<<height<<" - "<<channels<<"\n";
-    stbi_image_free(img);
-    return img; 
-  }
-
-  bool Server::write_image(char* img_data,char* path,int width,int height,int channels){
-    stbi_write_png(path, width, height, channels, img_data, width * channels);
-    return true;
-  }
 
 
 }

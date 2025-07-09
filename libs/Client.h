@@ -9,9 +9,6 @@ namespace Client {
 	extern int readercount;
 
 
-	void* reader(void* param);
-	void* writer(void* param);
-
 	class Client{
 		public:
 			Client()
@@ -29,11 +26,8 @@ namespace Client {
 			void transfer_via_socket(char* buffer);
 			void chat_to_server();
 
-      void image_transfer(char* path);
 			void get_file_names() const;
-			unsigned char* send_image(char* file_path);
-			bool write_image(char* img_data, char* path, int width, int height, int channels);
-      void get_file_content(const char* buff) const;
+		    void get_file_content(const char* buff) const;
 
 
 		private:
